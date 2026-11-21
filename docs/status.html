@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>claude-rules の状況</title>
+<style>
+  :root {
+    --bg: #fbfaf8; --fg: #1f1d1a; --muted: #6b665e; --line: #d9d4cc;
+    --card: #ffffff; --accent: #2f6db3; --ok: #2e7d4f; --warn: #a86a12;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917; --fg: #ece8e1; --muted: #a39d93; --line: #3a3732;
+      --card: #23221f; --accent: #7fb0e8; --ok: #6cc391; --warn: #e2a64a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 15px/1.7 system-ui, -apple-system, "Hiragino Sans", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  h2 { font-size: 1.1rem; margin: 36px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  .sub { color: var(--muted); margin: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  svg { width: 100%; height: auto; display: block; }
+  .diagram { overflow-x: auto; }
+  .diagram svg { min-width: 640px; }
+  svg .box { fill: var(--card); stroke: var(--line); }
+  svg .src { stroke: var(--accent); stroke-width: 2; }
+  svg text { fill: var(--fg); font-size: 13px; }
+  svg .small { fill: var(--muted); font-size: 11px; }
+  svg .arrow { stroke: var(--accent); stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  ul { padding-left: 1.2em; margin: 0; }
+  li { margin: 4px 0; }
+  .done::marker { content: "✓  "; color: var(--ok); }
+  .todo::marker { content: "○  "; color: var(--warn); }
+  code { font-size: 0.9em; background: color-mix(in srgb, var(--line) 40%, transparent); padding: 0 4px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>claude-rules の状況</h1>
+  <p class="sub">最終更新: 2026-11-21</p>
+
+  <h2>全体像</h2>
+  <div class="card diagram">
+    <svg viewBox="0 0 800 250" role="img" aria-label="正本の CLAUDE.md がクラウドと Mac に配られる流れ">
+      <defs>
+        <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor" style="color: var(--accent)"></path>
+        </marker>
+      </defs>
+      <rect class="box src" x="270" y="10" width="260" height="62" rx="8"></rect>
+      <text x="400" y="36" text-anchor="middle">正本: claude-rules の main</text>
+      <text x="400" y="56" text-anchor="middle" class="small">CLAUDE.md(push のたびに CI で検査)</text>
+
+      <rect class="box" x="20" y="120" width="320" height="56" rx="8"></rect>
+      <text x="180" y="144" text-anchor="middle">クラウド: セットアップスクリプト</text>
+      <text x="180" y="163" text-anchor="middle" class="small">起動時に raw URL から取得(失敗時は知らせるだけ)</text>
+
+      <rect class="box" x="460" y="120" width="320" height="56" rx="8"></rect>
+      <text x="620" y="144" text-anchor="middle">Mac: ~/claude-rules の複製</text>
+      <text x="620" y="163" text-anchor="middle" class="small">セッション開始時に git pull(フック)</text>
+
+      <rect class="box" x="20" y="200" width="320" height="40" rx="8"></rect>
+      <text x="180" y="225" text-anchor="middle">~/.claude/CLAUDE.md(書き出し)</text>
+      <rect class="box" x="460" y="200" width="320" height="40" rx="8"></rect>
+      <text x="620" y="225" text-anchor="middle">~/.claude/CLAUDE.md(@import の1行)</text>
+
+      <path class="arrow" d="M330,72 C300,95 220,100 190,118"></path>
+      <path class="arrow" d="M470,72 C500,95 580,100 610,118"></path>
+      <path class="arrow" d="M180,176 L180,198"></path>
+      <path class="arrow" d="M620,176 L620,198"></path>
+    </svg>
+  </div>
+
+  <h2>進捗</h2>
+  <div class="card">
+    <ul>
+      <li class="done">ルール本文(CLAUDE.md)の作成と検査</li>
+      <li class="done">クラウド用の取得スクリプトと試験(成功・取得先なし・空の3通り)</li>
+      <li class="done">Mac 用の導入スクリプトと試験、CI、README</li>
+      <li class="todo">GitHub への公開と、公開された本文の照合</li>
+      <li class="todo">クラウド環境のセットアップスクリプトの差し替えと、新しいセッションでの確認</li>
+      <li class="todo">Mac での導入(ユーザーが実行)</li>
+    </ul>
+  </div>
+
+  <h2>課題</h2>
+  <div class="card">
+    <ul>
+      <li>もう一つのクラウド環境「Default」には、<code>setup-cloud.sh</code> を手で貼る必要がある</li>
+      <li>クラウドのセッションで <code>claude/*</code> のブランチ名を求められると、<code>feat/&lt;テーマ&gt;</code> と食い違う</li>
+      <li><code>check.sh</code> は CR 以外の制御文字を検査しない。行数は末尾に改行がないと1行少なく数える</li>
+      <li>superpowers の設計書の置き場所を指定していない</li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>
