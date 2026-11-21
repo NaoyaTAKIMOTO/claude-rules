@@ -22,7 +22,7 @@ Claude Code の共通作業ルール(`CLAUDE.md`)の正本です。クラウド�
        "SessionStart": [
          {
            "hooks": [
-             { "type": "command", "command": "git -C ~/claude-rules pull --ff-only -q >/dev/null 2>&1 || true" }
+             { "type": "command", "command": "bash ~/claude-rules/update.sh", "timeout": 15 }
            ]
          }
        ]
@@ -30,7 +30,7 @@ Claude Code の共通作業ルール(`CLAUDE.md`)の正本です。クラウド�
    }
    ```
 
-   直した内容は、次のセッションから効きます。
+   直した内容は、次のセッションから効きます。`update.sh` は更新に失敗したときだけ、そのことを Claude に知らせます(Claude からあなたに伝わります)。`~/claude-rules` で直したまま commit と push をしないでいると、更新が失敗することがあります。
 
 ## クラウドでの設定
 
@@ -51,6 +51,7 @@ push すると GitHub Actions でも同じ検査が動きます。
 | `CLAUDE.md` | ルール本文(正本) |
 | `setup-cloud.sh` | クラウド環境のセットアップスクリプト |
 | `install.sh` | Mac 用の導入スクリプト |
+| `update.sh` | Mac の SessionStart フックから呼ぶ更新スクリプト |
 | `check.sh` | 本文とスクリプトの上限・必須語の検査 |
-| `test-setup-cloud.sh` / `test-install.sh` | スクリプトの試験 |
+| `test-setup-cloud.sh` / `test-install.sh` / `test-update.sh` | スクリプトの試験 |
 | `run-tests.sh` | すべての検査と試験を実行する |

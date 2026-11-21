@@ -3,7 +3,7 @@
 set -u
 cd "$(dirname "$0")"
 fail=0
-for t in "check.sh CLAUDE.md" "check.sh setup-cloud.sh" "test-setup-cloud.sh" "test-install.sh"; do
+for t in "check.sh CLAUDE.md" "check.sh setup-cloud.sh" "test-setup-cloud.sh" "test-install.sh" "test-update.sh"; do
   set -- $t
   if [ ! -f "$1" ]; then echo "FAIL: $1 がない"; fail=1; continue; fi
   if out=$(bash "$@" 2>&1); then echo "PASS: $t"; else echo "FAIL: $t"; echo "$out"; fail=1; fi

@@ -61,7 +61,7 @@
 
       <rect class="box" x="460" y="120" width="320" height="56" rx="8"></rect>
       <text x="620" y="144" text-anchor="middle">Mac: ~/claude-rules の複製</text>
-      <text x="620" y="163" text-anchor="middle" class="small">セッション開始時に git pull(フック)</text>
+      <text x="620" y="163" text-anchor="middle" class="small">セッション開始時に update.sh で git pull(失敗時は知らせる)</text>
 
       <rect class="box" x="20" y="200" width="320" height="40" rx="8"></rect>
       <text x="180" y="225" text-anchor="middle">~/.claude/CLAUDE.md(書き出し)</text>
@@ -94,7 +94,7 @@
     <ul>
       <li>もう一つのクラウド環境「Default」には、<code>setup-cloud.sh</code> を手で貼る必要がある</li>
       <li>クラウドのセッションで <code>claude/*</code> のブランチ名を求められると、<code>feat/&lt;テーマ&gt;</code> と食い違う</li>
-      <li><code>check.sh</code> は CR 以外の制御文字を検査しない。行数は末尾に改行がないと1行少なく数える</li>
+      <li>小さな指摘を見送り中(一覧は <code>docs/log.md</code>)。主なもの: 取得結果が HTML のエラーページでも置き換わる、定期実行で確認が必要な場面の扱い、フォークの見分け方</li>
       <li>superpowers の設計書の置き場所を指定していない</li>
     </ul>
   </div>

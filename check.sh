@@ -26,7 +26,7 @@ if [[ "$f" == *.md ]]; then
   for kw in 大目的 先行事例 合意 docs/plans/ docs/log.md docs/status.html テストファースト コミット \
             失敗したときの出力 緩めない サブエージェント スクショ main dev feat e2e "GitHub Actions" Mac \
             セキュリティ リファクタリング 定数 承認 NaoyaTAKIMOTO フォーク "[定期実行]" 1か月 \
-            feat/refactor- 方針; do
+            feat/refactor- 方針 整うまでは 指示文そのもの 無視する; do
     grep -qF -- "$kw" "$f" || { echo "NG: 必須語「$kw」がない"; fail=1; }
   done
   # 最終チェックで見つかった食い違い(dev には直接コミットできない)の再発を防ぐ
