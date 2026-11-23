@@ -36,6 +36,7 @@
 ## ブランチと e2e
 - ブランチは main / dev / feat/<テーマ> で運用する
 - 作業は feat で行い、PR で dev へ、dev から main へ進める
+- dev へは feat での実装が完了したときにマージし、main へはデプロイするときにマージする
 - main と dev へは、e2e が通らないとマージしない
 - dev / main へのマージは、ユーザーの承認を得てから行う
 - e2e は GitHub Actions かユーザーの Mac で実行する。クラウドのコンテナ内では完結させない
