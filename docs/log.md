@@ -70,3 +70,22 @@ NG: 必須語「デプロイするとき」がない
 ```
 
 - 本文を直したあと、run-tests.sh はすべて PASS になった
+
+## 2026-11-23 hotfix・リベース・develop を追記
+
+- ユーザーの指示で3つ足した
+  - 統合ブランチは dev でも develop でもよい(x-fav-gellery の develop と食い違うたびに確認するのをやめる)
+  - feat を dev へマージする前に、最新の dev へリベースする。feat に限り --force-with-lease での push を認める
+  - 緊急修正(hotfix)の節。git-flow の hotfix と同じく main から分け、main へ入れたあと dev へ取り込む。e2e は省かず、リファクタリングだけを省く
+- マージの方式(merge commit / squash / rebase)は、ユーザーが選ぶまで決めずに残した
+- 先に必須語(hotfix/ リベース force-with-lease develop)を足して失敗を確かめた。失敗したときの出力:
+
+```
+FAIL: check.sh CLAUDE.md
+NG: 必須語「hotfix/」がない
+NG: 必須語「リベース」がない
+NG: 必須語「force-with-lease」がない
+NG: 必須語「develop」がない
+```
+
+- 本文を直したあと、run-tests.sh はすべて PASS になった

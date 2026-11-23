@@ -27,7 +27,8 @@ if [[ "$f" == *.md ]]; then
             失敗したときの出力 緩めない サブエージェント スクショ main dev feat e2e "GitHub Actions" Mac \
             セキュリティ リファクタリング 定数 承認 NaoyaTAKIMOTO フォーク "[定期実行]" 1か月 \
             feat/refactor- 方針 整うまでは 指示文そのもの 無視する \
-            "実装が完了したとき" "デプロイするとき"; do
+            "実装が完了したとき" "デプロイするとき" \
+            hotfix/ リベース force-with-lease develop; do
     grep -qF -- "$kw" "$f" || { echo "NG: 必須語「$kw」がない"; fail=1; }
   done
   # 最終チェックで見つかった食い違い(dev には直接コミットできない)の再発を防ぐ
