@@ -107,3 +107,31 @@ NG: 必須語「linear history」がない
 ```
 
 - 本文を直したあと、run-tests.sh はすべて PASS になった
+
+## 2026-11-23 見送っていた指摘2件と、~/.claude の整理
+
+### ルール本文
+- 前回の見直しで見送った指摘のうち2件を直した
+  - クラウドで claude/* などのブランチ名を指定されたときは、feat と同じに扱う
+  - 定期実行中に「ユーザーに確認する」場面に当たったら、止めて報告する
+- 先に必須語("claude/*" "確認する場面")を足して失敗を確かめた。失敗したときの出力:
+
+```
+FAIL: check.sh CLAUDE.md
+NG: 必須語「claude/*」がない
+NG: 必須語「確認する場面」がない
+```
+
+- 1回目の修正では、本文の言い回しが必須語と合わず「確認する場面」がないままだった。本文を直したあと、run-tests.sh はすべて PASS になった
+
+### ~/.claude/settings.json(このリポジトリの外。記録だけ残す)
+- 公式ドキュメントでは、autoMode はユーザー設定と管理設定からしか読まれない(https://code.claude.com/docs/en/settings-reference)。x-fav-gellery 専用の情報をリポジトリの .claude/settings.json に移すと効かなくなるので、グローバルに残した
+- autoMode.environment の重複5件は、古い方(archive/ へ移す前のマイグレーションのパスなど)を消し、新しい方を残した。30件から25件になった。バックアップは ~/.claude/backups/settings.json.2026-11-23-before-dedupe
+- permissions.deny を足した
+  - `--force` / `-f` での git push。`--force-with-lease` は一致しないので、feat への push は止まらない
+  - `.env` と `.env.*` の読み取り。`.env.example`・`.env.sample`・`.env.template` は `!` で例外にした(deny は allow で上書きできないため)
+  - カレントディレクトリの中で、.env と .env.local が止まり、.env.example は読めることを確かめた。`**/` はカレントディレクトリより外には効かない
+
+### GitHub のマージ方式
+- 統合ブランチがある7リポジトリ(mac-mini-queue 3d_packing image2CAD 3D_Chatting umigame_GAN tsuzukan x-fav-gellery)で、squash と rebase のマージをオフにしようとした。auto mode の判定で止められたので、まだ変わっていない
+- どのリポジトリのスクリプトや CI も、squash を前提にしていないことは確認済み(x-fav-gellery の pr:merge は --merge、tsuzukan のマージは親が2つのマージコミット)
