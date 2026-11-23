@@ -135,3 +135,9 @@ NG: 必須語「確認する場面」がない
 ### GitHub のマージ方式
 - 統合ブランチがある7リポジトリ(mac-mini-queue 3d_packing image2CAD 3D_Chatting umigame_GAN tsuzukan x-fav-gellery)で、squash と rebase のマージをオフにしようとした。auto mode の判定で止められたので、まだ変わっていない
 - どのリポジトリのスクリプトや CI も、squash を前提にしていないことは確認済み(x-fav-gellery の pr:merge は --merge、tsuzukan のマージは親が2つのマージコミット)
+
+## 2026-11-23 マージ方式の設定と、信頼範囲の変更
+
+- ユーザーの明示の指示を受けて、7リポジトリ(mac-mini-queue 3d_packing image2CAD 3D_Chatting umigame_GAN tsuzukan x-fav-gellery)で squash と rebase のマージをオフにした。どれも squash=false rebase=false merge=true になったことを API の応答で確かめた
+- ユーザーは「自分の所有するリポジトリなら、複数にまたがる変更をしてよい」とした
+- それに合わせて ~/.claude/settings.json の autoMode で、信頼するリポジトリを x-fav-gellery だけから NaoyaTAKIMOTO の所有するもの全体(フォークを除く)に広げようとした。Claude 自身が判定を緩めることになるため、auto mode に [Undermining Oversight] で止められた。回避はせず、ユーザーが自分で実行するスクリプトを渡した
