@@ -80,3 +80,11 @@
   - テストを緩める必要が出た(緩めずに止める)
   - ユーザーに確認する場面に当たった(ルールの食い違いなど。勝手に選ばない)
 - 自動で決めたことは、docs/log.md と最後の報告に残す
+
+## 重いジョブ(mq がある Mac)
+- mq がある Mac では、MLX・e2e・Ollama・重いビルドは mq submit で投げる
+- 投げ方: id=$(mq submit --profile <名前> -- <コマンド>)。名前は e2e-speed / mlx-train / mlx-eval / ollama / build
+- 合うプロファイルがなければ --gpu / --mem / --cpu で申告する
+- 結果は mq wait <id> をバックグラウンドで受け取り、待つ間は別の作業を進める
+- dev サーバーやシミュレータは mq hold で占有し、終わったら mq release する。ポートは PORT=$(mq hold port)
+- 状況は mq status で確かめる。ほかのスレッドのジョブは止めない
