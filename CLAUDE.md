@@ -40,6 +40,7 @@
 - dev へは feat での実装が完了したときにマージし、main へはデプロイするときにマージする
 - feat を dev へマージする前に、最新の dev へリベースし、テストを通し直す
 - リベースした feat は git push --force-with-lease で push してよい。main と dev には force push しない
+- PR はマージコミットでマージする(feat → dev、dev → main、main → dev のどれも)。squash と rebase のマージは使わない
 - main と dev へは、e2e が通らないとマージしない
 - dev / main へのマージは、ユーザーの承認を得てから行う
 - e2e は GitHub Actions かユーザーの Mac で実行する。クラウドのコンテナ内では完結させない
@@ -47,6 +48,7 @@
   - dev ブランチ
   - 単体・結合テストと e2e を実行する GitHub Actions のワークフロー
   - main / dev へのブランチ保護(e2e が通らないとマージできない設定)
+  - dev へのブランチ保護で、最新の dev を取り込むまでマージできない設定。Require linear history は使わない
 - 上が整うまでは(リモートがないリポジトリを含む)、そのリポジトリの今の流れに従い、整備を一度ユーザーに提案する
 - ブランチ保護が使えないとき(無料プランの非公開リポジトリなど)はユーザーに伝え、運用で守る
 
