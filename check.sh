@@ -29,7 +29,8 @@ if [[ "$f" == *.md ]]; then
             feat/refactor- 方針 整うまでは 指示文そのもの 無視する \
             "実装が完了したとき" "デプロイするとき" \
             hotfix/ リベース force-with-lease develop マージコミット squash "linear history" \
-            "claude/*" "確認する場面"; do
+            "claude/*" "確認する場面" \
+            "--timeout 7000" 待ち直す; do
     grep -qF -- "$kw" "$f" || { echo "NG: 必須語「$kw」がない"; fail=1; }
   done
   # 最終チェックで見つかった食い違い(dev には直接コミットできない)の再発を防ぐ
