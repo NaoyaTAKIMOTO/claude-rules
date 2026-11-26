@@ -82,9 +82,9 @@
 - 自動で決めたことは、docs/log.md と最後の報告に残す
 
 ## 重いジョブ(mq がある Mac)
-- mq がある Mac では、MLX・e2e・Ollama・重いビルドは mq submit で投げる
-- 投げ方: id=$(mq submit --profile <名前> -- <コマンド>)。名前は e2e-speed / mlx-train / mlx-eval / ollama / build
-- 合うプロファイルがなければ --gpu / --mem / --cpu で申告する
+- mq がある Mac では、MLX・e2e・Ollama・重いビルドは mq submit で投げる(外部 API を呼ぶだけの処理は対象外)
+- 投げ方: id=$(mq submit --profile <名前> -- <コマンド>)。名前は e2e-speed(速度の計測だけ。ほかは全部止まる) / mlx-train / mlx-eval / ollama / build
+- 合うプロファイルがなければ --gpu / --mem / --cpu で申告する(28GB を超えるなら --machine)
 - mq wait <id> --timeout 7000 をバックグラウンドで待ち、その間は別の作業を進める。124 で戻っても失敗ではないので、同じ id で待ち直す
 - dev サーバーやシミュレータは mq hold で占有し、終わったら mq release する。ポートは PORT=$(mq hold port)
 - 状況は mq status で確かめる。ほかのスレッドのジョブは止めない
