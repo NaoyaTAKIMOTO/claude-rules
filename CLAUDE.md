@@ -45,7 +45,8 @@
 - 統合ブランチは dev でも develop でもよい。リポジトリにある方を使う(このルールでは dev と書く)
 - クラウドなどでブランチ名を指定されたとき(claude/* など)は、それを feat と同じに扱う
 - 作業は feat で行い、PR で dev へ、dev から main へ進める(緊急修正は「緊急修正」の節に従う)
-- feat は最新の dev から作る。dev にまだ入っていない feat の変更が要るときだけその feat から作り、そちらが dev に入ってから dev へリベースして PR を出す
+- feat は最新の dev から作る。dev 未反映の feat の変更が要るときだけその feat から作る
+  - その場合は、元の feat が dev に入ってから dev へリベースし、PR を出す
 - dev へは feat での実装が完了したときにマージし、main へはデプロイするときにマージする
 - feat を dev へマージする前に、最新の dev へリベースし、テストを通し直す
 - リベースした feat は git push --force-with-lease で push してよい。main と dev には force push しない
