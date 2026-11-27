@@ -31,7 +31,7 @@ if [[ "$f" == *.md ]]; then
             hotfix/ リベース force-with-lease develop マージコミット squash "linear history" \
             "claude/*" "確認する場面" \
             "--timeout 7000" 待ち直す 別のセッション 引き継ぎ \
-            "最新の dev から作る"; do
+            "最新の dev から作る" 完了条件 最初の返答; do
     grep -qF -- "$kw" "$f" || { echo "NG: 必須語「$kw」がない"; fail=1; }
   done
   # 最終チェックで見つかった食い違い(dev には直接コミットできない)の再発を防ぐ
