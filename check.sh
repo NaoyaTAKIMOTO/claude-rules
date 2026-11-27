@@ -6,7 +6,7 @@ f=${1:?file required}
 [ -f "$f" ] || { echo "NG: $f がない"; exit 1; }
 
 case "$f" in
-  *.md) max_lines=90;  max_bytes=190 ;;
+  *.md) max_lines=100; max_bytes=190 ;;
   *.sh) max_lines=100; max_bytes=200 ;;
   *) echo "NG: 拡張子は .md か .sh"; exit 1 ;;
 esac
@@ -30,7 +30,7 @@ if [[ "$f" == *.md ]]; then
             "実装が完了したとき" "デプロイするとき" \
             hotfix/ リベース force-with-lease develop マージコミット squash "linear history" \
             "claude/*" "確認する場面" \
-            "--timeout 7000" 待ち直す; do
+            "--timeout 7000" 待ち直す 別のセッション 引き継ぎ; do
     grep -qF -- "$kw" "$f" || { echo "NG: 必須語「$kw」がない"; fail=1; }
   done
   # 最終チェックで見つかった食い違い(dev には直接コミットできない)の再発を防ぐ
